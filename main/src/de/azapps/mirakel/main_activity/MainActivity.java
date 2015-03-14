@@ -122,6 +122,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                             RESULT_SETTINGS = 4, RESULT_ADD_FILE = 5, RESULT_CAMERA = 6,
                             RESULT_ADD_PICTURE = 7;
     private static final String TAG = "MainActivity";
+    private long backPressedTime = 0;
     // TODO We should do this somehow else
     public static boolean updateTasksUUID = false;
 
@@ -1143,7 +1144,14 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 break;
             }
         }
-        super.onBackPressed();
+        long t = System.currentTimeMillis();
+        if (t - backPressedTime > 2000) {
+            backPressedTime = t;
+            Toast.makeText(this, "Press back again to logout",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
